@@ -86,24 +86,29 @@ def main():
         print("...........books...........")
         showbook()
         print("............................")
-        userinput = input(str("Select book to buy : "))
-        query = "SELECT * from bookList"
-        cur.execute(query)
-        result = cur.fetchall()
-        for data in result:
-            if(data[1]==userinput):
-                quantity = input(str("How many book do you buy ? : "))
-                condition = 1
-                if(int(quantity)<=data[2]):
-                    price  = data[3] * int(quantity)
-                    buybook(data[1], price, quantity, data[2], data[0], username)
-                    break
-                else:
-                    print("\nQuantity is not Available try again\n\n")
-
-        if(condition==0):
-            condition = 0
-            print("\nBook is not listed try again\n\n")
         
+        userinput = input(str("Select book to buy : "))
+        if(userinput=='q'):
+                loop = 'q'
+                break
+        else:
+                query = "SELECT * from bookList"
+                cur.execute(query)
+                result = cur.fetchall()
+                for data in result:
+                        if(data[1]==userinput):
+                                quantity = input(str("How many book do you buy ? : "))
+                                condition = 1
+                                if(int(quantity)<=data[2]):
+                                        price  = data[3] * int(quantity)
+                                        buybook(data[1], price, quantity, data[2], data[0], username)
+                                        break
+                                else:
+                                        print("\nQuantity is not Available try again\n\n")
+
+                if(condition==0):
+                        condition = 0
+                        print("\nBook is not listed try again\n\n")
+                condition = 0
 
 main()
